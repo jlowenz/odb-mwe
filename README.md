@@ -1,36 +1,16 @@
 # odb-mwe
 
-FIXME: description
+A minimal working example of an OrientDB bug. This bug seems to be present in the memory and plocal storage, but not during remote access to a server. 
 
-## Installation
+Two vertices are created that refer to each other. They are subsequently queried; in the case of the remote server, the link fields are valid and the mutual references are in place. In the case of memory and plocal embedded DBs, this is not the case: one field is valid while the other isn't. 
 
-Download from http://example.com/FIXME.
+## Download and test
 
-## Usage
-
-FIXME: explanation
-
-    $ java -jar odb-mwe-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+Download the source (it's in Clojure), and run `lein midje` to run the test. 
 
 ## License
 
-Copyright © 2015 FIXME
+Copyright © 2015 jlowenz
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
