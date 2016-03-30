@@ -8,10 +8,11 @@
                  [org.clojure/java.classpath "0.2.2"]
                  [org.clojure/tools.namespace "0.2.11"]
                  [org.clojure/tools.logging "0.3.1"]
+                 [junit "4.4"]
                  ;; Databases
-                 [com.orientechnologies/orientdb-client "2.1.5"]
+                 [com.orientechnologies/orientdb-client "2.1.13"]
                  [com.tinkerpop.blueprints/blueprints-core "2.6.0"]
-                 [com.orientechnologies/orientdb-graphdb "2.1.5"]]
+                 [com.orientechnologies/orientdb-graphdb "2.1.13"]]
   :main ^:skip-aot odb-mwe.core
   :target-path "target/%s"
   :profiles {:dev {:dependencies [[midje "1.8.2"]]}
