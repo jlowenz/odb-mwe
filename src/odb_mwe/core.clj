@@ -118,7 +118,6 @@
   [g name]
   (let [sql (str "select from V where name='" name "'")
         vs (seq (sql-query g sql))]
-    (log/info "vs is: " vs)
     (first vs)))
 
 (defn -main

@@ -6,6 +6,7 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 import com.tinkerpop.blueprints.impls.orient.OrientGraphFactory;
 import com.tinkerpop.blueprints.impls.orient.OrientVertex;
 
+import java.util.Iterator;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -60,6 +61,7 @@ public class ODB {
                     throw e;
                 }
             }
+	    return null;
         }
     }
 
@@ -71,11 +73,11 @@ public class ODB {
             return ret;
         } catch (Throwable t) {
             g.rollback();
-            t.printStackTrace();
+            //t.printStackTrace();
+	    throw t;
         } finally {
             g.shutdown();
         }
-        return null;
     }
 
     public static String asClass(String name)
@@ -91,8 +93,10 @@ public class ODB {
     public static OrientVertex[] createVertices(OrientGraph g)
     {
         OrientVertex v1 = addVertex(g, "V", "name", "A");
-        OrientVertex v2 = addVertex(g, "V", "name", "B");
+        OrientVertex v2 = addVertex(g, "V", "name", "B", "other", v1);
         v1.setProperty("other", v2);
+	v1.save();
+	v2.save();
         return new OrientVertex[] {v1, v2};
     }
 
@@ -100,7 +104,15 @@ public class ODB {
     {
         String sql = "select from V where name='" + name + "'";
         Iterable<OrientVertex> results = g.command(new OCommandSQL(sql).setFetchPlan("*:-1")).execute();
-        log.fine("Got " + results);
-        return results.iterator().next();
+        System.out.println("Got " + results);
+	Iterator<OrientVertex> i = results.iterator();
+	if (i.hasNext()) return i.next();
+	else return null;
+        //return results.iterator().next();
+    }
+    
+    public static Object query(OrientGraph g, String sql)
+    {
+	return g.command(new OCommandSQL(sql).setFetchPlan("*:-1")).execute();
     }
 }
